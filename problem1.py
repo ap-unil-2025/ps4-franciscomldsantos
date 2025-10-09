@@ -5,6 +5,11 @@ Practice working with Python lists - creating, modifying, filtering, and transfo
 
 
 def create_number_list(start, end):
+    number_list = []
+    for i in range(start, end+1):
+        number_list.append(i)
+    return number_list
+
     """
     Create a list of numbers from start to end (inclusive).
 
@@ -25,6 +30,11 @@ def create_number_list(start, end):
 
 
 def filter_even_numbers(numbers):
+    even_numbers = []
+    for i in numbers:
+        if i%2==0:
+            even_numbers.append(i)
+    return even_numbers
     """
     Return a new list containing only the even numbers.
 
@@ -44,6 +54,11 @@ def filter_even_numbers(numbers):
 
 
 def square_numbers(numbers):
+    squared = []
+    for i in numbers:
+        j = i**2
+        squared.append(j)
+    return squared
     """
     Return a new list with each number squared.
 
@@ -63,6 +78,9 @@ def square_numbers(numbers):
 
 
 def find_max_min(numbers):
+    maximum = max(numbers)
+    minimum = min(numbers)
+    return(maximum, minimum)
     """
     Find the maximum and minimum values in a list.
 
@@ -82,6 +100,11 @@ def find_max_min(numbers):
 
 
 def remove_duplicates(items):
+    new_list = []
+    for i in items:
+        if i not in new_list:
+            new_list.append(i)
+    return new_list
     """
     Remove duplicate items from a list while preserving order.
 
@@ -102,6 +125,20 @@ def remove_duplicates(items):
 
 
 def merge_lists(list1, list2):
+    merged = []
+    min_length=min(len(list1),len(list2))
+    max_length=max(len(list1),len(list2))
+    if max_length == len(list1):
+        big_list = list1
+    else:
+        big_list = list2
+    for i in range(0,min_length):
+        merged.append(list1[i])
+        merged.append(list2[i])
+    for i in range(min_length, max_length):
+        merged.append(big_list[i])
+    return(merged)
+
     """
     Merge two lists, alternating elements from each.
     If one list is longer, append remaining elements.
@@ -125,6 +162,24 @@ def merge_lists(list1, list2):
 
 
 def list_statistics(numbers):
+    if not numbers:
+        return None
+    else:
+        portfolio = {}
+        addition = 0
+        for i in numbers:
+            addition += i
+        average = addition/len(numbers)
+        count = len(numbers)
+        maximum = max(numbers)
+        minimum = min(numbers)
+        portfolio["sum"]=addition
+        portfolio["average"]=average
+        portfolio["count"]=count
+        portfolio["max"]=maximum
+        portfolio["min"]=minimum
+        return portfolio
+
     """
     Calculate statistics for a list of numbers.
 
@@ -138,8 +193,6 @@ def list_statistics(numbers):
         >>> list_statistics([1, 2, 3, 4, 5])
         {'sum': 15, 'average': 3.0, 'count': 5, 'max': 5, 'min': 1}
     """
-    if not numbers:
-        return None
 
     # TODO: Implement this function
     # Calculate and return a dictionary with the statistics
@@ -147,6 +200,13 @@ def list_statistics(numbers):
 
 
 def chunk_list(items, chunk_size):
+    chunked = []
+    for i in range(0,len(items),chunk_size):
+        new_list = items[i:i+chunk_size]
+        chunked.append(new_list)
+    return(chunked)
+
+
     """
     Split a list into chunks of specified size.
 

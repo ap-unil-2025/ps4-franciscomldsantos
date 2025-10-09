@@ -5,6 +5,12 @@ Practice working with Python dictionaries - creating, accessing, modifying, and 
 
 
 def create_student_record(name, age, major, gpa):
+    dictionary = {}
+    dictionary["name"]=name
+    dictionary["age"]=age
+    dictionary["major"]=major
+    dictionary["gpa"]=gpa
+    return dictionary
     """
     Create a student record as a dictionary.
 
@@ -27,6 +33,11 @@ def create_student_record(name, age, major, gpa):
 
 
 def get_value_safely(dictionary, key, default=None):
+    try:
+        search=dictionary[key]
+        return search
+    except KeyError:
+        return default
     """
     Get a value from a dictionary safely, returning default if key doesn't exist.
 
@@ -51,6 +62,22 @@ def get_value_safely(dictionary, key, default=None):
 
 
 def merge_dictionaries(dict1, dict2):
+    dictionary={}
+    keys1=list(dict1.keys())
+    keys2=list(dict2.keys())
+    new_keys1=[]
+    for i in keys1:
+        if i not in keys2:
+            new_keys1.append(i)
+    for j in new_keys1:
+        dictionary[j]=dict1[j]   
+    for k in keys2:
+        dictionary[k]=dict2[k]
+    return dictionary
+
+
+
+
     """
     Merge two dictionaries. If keys conflict, dict2's values take precedence.
 
@@ -71,6 +98,18 @@ def merge_dictionaries(dict1, dict2):
 
 
 def count_word_frequency(text):
+    import string
+    for i in string.punctuation:
+        text = text.replace(i,"")
+    new_text = text.lower().split()
+    dictionary = {}
+    for word in new_text:
+        if word in dictionary:
+            dictionary[word]+=1
+        else:
+            dictionary[word]=1
+    return dictionary
+
     """
     Count the frequency of each word in a text string.
     Convert to lowercase and ignore punctuation.
@@ -95,6 +134,11 @@ def count_word_frequency(text):
 
 
 def invert_dictionary(dictionary):
+    new_dict = {}
+    for key in dictionary:
+        value = dictionary[key]
+        new_dict[value] = key
+    return new_dict
     """
     Invert a dictionary (swap keys and values).
     Assume all values are unique.
@@ -115,6 +159,10 @@ def invert_dictionary(dictionary):
 
 
 def filter_dictionary(dictionary, keys_to_keep):
+    new_dict = {}
+    for key in keys_to_keep:
+        new_dict[key]=dictionary[key]
+    return new_dict
     """
     Create a new dictionary with only the specified keys.
 
@@ -135,6 +183,14 @@ def filter_dictionary(dictionary, keys_to_keep):
 
 
 def group_by_first_letter(words):
+    dictionary = {}
+    for word in words:
+        if word[0] not in dictionary:
+            dictionary[word[0]]=[word]
+        else:
+            dictionary[word[0]].append(word)
+    return dictionary
+
     """
     Group words by their first letter.
 
@@ -157,6 +213,12 @@ def group_by_first_letter(words):
 
 
 def calculate_grades_average(students):
+    students_avg = {}
+    for student in students:
+        grades = students[student]
+        average=sum(grades)/len(grades)
+        students_avg[student]=round(average,2)
+    return students_avg
     """
     Calculate the average grade for each student.
 
@@ -182,6 +244,14 @@ def calculate_grades_average(students):
 
 
 def nested_dict_access(data, keys):
+    for key in keys:
+        try:
+            data = data[key]
+        except KeyError:
+            data = None
+    return data
+
+
     """
     Access a nested dictionary using a list of keys.
     Return None if any key doesn't exist.
