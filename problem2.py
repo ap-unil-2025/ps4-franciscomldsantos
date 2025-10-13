@@ -6,10 +6,10 @@ Practice working with Python dictionaries - creating, accessing, modifying, and 
 
 def create_student_record(name, age, major, gpa):
     dictionary = {}
-    dictionary["name"]=name
-    dictionary["age"]=age
-    dictionary["major"]=major
-    dictionary["gpa"]=gpa
+    dictionary['name']=name
+    dictionary['age']=age
+    dictionary['major']=major
+    dictionary['gpa']=gpa
     return dictionary
     """
     Create a student record as a dictionary.

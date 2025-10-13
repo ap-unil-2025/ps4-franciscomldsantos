@@ -6,6 +6,12 @@ Practice combining data structures and writing functions.
 
 
 def create_contact(name, phone, email=""):
+    dictionary={
+        'name': name,
+        'phone': phone,
+        'email': email
+    }
+    return dictionary
     """
     Create a contact dictionary.
 
@@ -27,6 +33,10 @@ def create_contact(name, phone, email=""):
 
 
 def add_contact(contacts, name, phone, email=""):
+    new_contact=create_contact(name, phone, email)
+    contacts.append(new_contact)
+    return new_contact
+
     """
     Add a new contact to the contacts list.
 
@@ -55,6 +65,17 @@ def add_contact(contacts, name, phone, email=""):
 
 
 def find_contact_by_name(contacts, name):
+    name = name.lower()
+    found = 0
+    for i in contacts: 
+        check_name=i['name']
+        if name == check_name.lower():
+            found = 1
+            return i
+    if found == 0:
+        return None
+        
+
     """
     Find a contact by name (case-insensitive).
 
@@ -77,6 +98,17 @@ def find_contact_by_name(contacts, name):
 
 
 def search_contacts(contacts, search_term):
+    cont_found = [] # List where contacts found are appended
+    for i in contacts:
+        cont_name = i['name'] # Extracts the name from the contact
+        cont_number = i['phone'] # Extracts the number from the contact
+        if search_term.lower() in cont_name.lower(): #Check if the inserted name is in the contacts, case-insensitive too
+            cont_found.append(i)
+        if search_term in cont_number: # If the search is a number it also checks
+            cont_found.append(i)
+    return cont_found
+    
+
     """
     Search for contacts by name or phone (partial match).
 
@@ -103,6 +135,19 @@ def search_contacts(contacts, search_term):
 
 
 def delete_contact(contacts, name):
+    contact_del = search_contacts(contacts, name)
+    if contact_del == []:
+        return False
+    for i,contact in enumerate(contacts):
+        if contact in contact_del:
+            contacts.pop(i)
+            return True
+        
+
+
+
+
+
     """
     Delete a contact by name.
 
@@ -128,6 +173,13 @@ def delete_contact(contacts, name):
 
 
 def count_contacts_with_email(contacts):
+    counter = 0
+    for i in contacts:
+        if i['email']!='':
+            counter+=1
+    return counter
+
+
     """
     Count how many contacts have an email address.
 
@@ -151,6 +203,10 @@ def count_contacts_with_email(contacts):
 
 
 def get_all_phone_numbers(contacts):
+    numbers = []
+    for contact in contacts:
+        numbers.append(contact['phone'])
+    return numbers
     """
     Extract all phone numbers from contacts.
 
@@ -174,7 +230,10 @@ def get_all_phone_numbers(contacts):
     pass
 
 
-def sort_contacts_by_name(contacts):
+def sort_contacts_by_name(contacts): 
+    names = sorted(contacts, key=lambda c: c['name'])
+    return names
+
     """
     Return a new list of contacts sorted alphabetically by name.
 
@@ -189,7 +248,8 @@ def sort_contacts_by_name(contacts):
         ...     {'name': 'Charlie', 'phone': '555-0003', 'email': ''},
         ...     {'name': 'Alice', 'phone': '555-0001', 'email': ''}
         ... ]
-        >>> sorted_contacts = sort_contacts_by_name(contacts)
+        >>> 
+        
         >>> [c['name'] for c in sorted_contacts]
         ['Alice', 'Charlie']
     """
@@ -200,6 +260,11 @@ def sort_contacts_by_name(contacts):
 
 
 def contact_exists(contacts, name):
+    value = find_contact_by_name(contacts, name)
+    if value == None:
+        return False
+    else:
+        return True
     """
     Check if a contact with the given name exists.
 

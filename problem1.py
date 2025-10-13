@@ -173,11 +173,11 @@ def list_statistics(numbers):
         count = len(numbers)
         maximum = max(numbers)
         minimum = min(numbers)
-        portfolio["sum"]=addition
-        portfolio["average"]=average
-        portfolio["count"]=count
-        portfolio["max"]=maximum
-        portfolio["min"]=minimum
+        portfolio['sum']=addition
+        portfolio['average']=average
+        portfolio['count']=count
+        portfolio['max']=maximum
+        portfolio['min']=minimum
         return portfolio
 
     """
