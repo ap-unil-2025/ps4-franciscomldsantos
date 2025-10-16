@@ -8,6 +8,15 @@ import json
 
 
 def save_to_json(data, filename):
+    try:
+        with open(filename, 'w') as f:
+            json.dump(data, f, indent=2)
+            return True
+    except ValueError:
+        return False
+
+
+
     """
     Save data to a JSON file.
 
@@ -37,6 +46,11 @@ def save_to_json(data, filename):
 
 
 def load_from_json(filename):
+    try:
+        with open(filename, "r") as f:
+            return json.load(f)
+    except ValueError or TypeError:
+        return None
     """
     Load data from a JSON file.
 
@@ -65,6 +79,11 @@ def load_from_json(filename):
 
 
 def save_contacts_to_file(contacts, filename="contacts.json"):
+    try:
+        save_to_json(contacts, filename)
+        return True
+    except ValueError or KeyError:
+        return False
     """
     Save a list of contacts to a JSON file.
 
@@ -81,6 +100,8 @@ def save_contacts_to_file(contacts, filename="contacts.json"):
 
 
 def load_contacts_from_file(filename="contacts.json"):
+    loaded = load_from_json(filename)
+    return loaded
     """
     Load contacts from a JSON file.
 
@@ -97,6 +118,9 @@ def load_contacts_from_file(filename="contacts.json"):
 
 
 def append_contact_to_file(contact, filename="contacts.json"):
+    loaded = load_contacts_from_file(filename)
+    loaded.append(contact)
+    save_contacts_to_file(loaded, filename)
     """
     Load existing contacts, add a new contact, and save back to file.
 
@@ -116,6 +140,12 @@ def append_contact_to_file(contact, filename="contacts.json"):
 
 
 def backup_file(source_filename, backup_filename):
+    try:   
+        loaded = load_from_json(source_filename)
+        save_to_json(loaded, backup_filename)
+        return True
+    except ValueError:
+        return None
     """
     Create a backup copy of a file.
 
@@ -132,6 +162,27 @@ def backup_file(source_filename, backup_filename):
 
 
 def get_file_stats(filename):
+    import os
+    dictionary = {}
+    existence=os.path.exists(filename)
+    dictionary['exists']=existence
+    if existence==True:
+        loaded = load_from_json(filename)
+        if type(loaded) == list:
+            dictionary['type']='list'
+            dictionary['count']=len(loaded)
+        elif type(loaded) == dict:
+            dictionary['type'] = 'dict'
+            dictionary['count']=len(loaded)
+        else: 
+            dictionary['type'] = 'other'
+        dictionary['size_bytes']=os.path.getsize(filename)
+    return dictionary
+    
+    
+    
+
+
     """
     Get statistics about a JSON file.
 
@@ -152,7 +203,7 @@ def get_file_stats(filename):
     # TODO: Implement this function
     # Use os.path.exists() and os.path.getsize() (need to import os)
     # Load the JSON data and determine its type
-    import os
+    
 
     # Check if file exists
     # Get file size
@@ -162,6 +213,17 @@ def get_file_stats(filename):
 
 
 def merge_json_files(file1, file2, output_file):
+    import os
+    if os.path.exists(file1)==True and os.path.exists(file2)==True:
+        loaded1 = load_from_json(file1)
+        loaded2 = load_from_json(file2)
+        loaded1 += loaded2
+        with open('merged.json','w') as f: 
+            json.dump(loaded1, f, indent=2)
+        return True
+    else:
+        return False
+
     """
     Merge two JSON files containing lists.
 
@@ -187,6 +249,12 @@ def merge_json_files(file1, file2, output_file):
 
 
 def search_json_file(filename, key, value):
+    loaded = load_from_json(filename)
+    result=[]
+    for dict in loaded:
+        if dict[key]==value:
+            result.append(dict)
+    return result
     """
     Search a JSON file (containing a list of dicts) for items matching a key-value pair.
 
