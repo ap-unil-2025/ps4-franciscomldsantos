@@ -223,6 +223,16 @@ def merge_json_files(file1, file2, output_file):
         return True
     else:
         return False
+    
+
+
+
+
+
+
+
+
+    
 
     """
     Merge two JSON files containing lists.
