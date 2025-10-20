@@ -10,6 +10,11 @@ Every recursive function needs:
 
 
 def factorial(n):
+    if n == 1 or n == 0:
+        return 1
+    else:
+        return n * factorial(n - 1)
+
     """
     Calculate factorial of n using recursion.
     n! = n × (n-1) × (n-2) × ... × 1
@@ -39,6 +44,12 @@ def factorial(n):
 
 
 def countdown(n):
+    if n == 0:
+        print("Blastoff!")
+    else:
+        print(n)
+        countdown(n-1)
+
     """
     Print numbers from n down to 1 using recursion.
 
@@ -61,6 +72,11 @@ def countdown(n):
 
 
 def sum_list(numbers):
+    if not numbers:
+        return 0
+    else:
+        return numbers[0] + sum_list(numbers[1:])
+
     """
     Calculate sum of list using recursion.
 
@@ -86,6 +102,13 @@ def sum_list(numbers):
 
 
 def fibonacci(n):
+    if n == 0:
+        return 0
+    elif n == 1:
+        return 1
+    else:
+        return fibonacci(n-1)+fibonacci(n-2)
+
     """
     Calculate nth Fibonacci number using recursion.
     Fibonacci sequence: 0, 1, 1, 2, 3, 5, 8, 13, ...
@@ -112,6 +135,10 @@ def fibonacci(n):
 
 
 def power(base, exponent):
+    if exponent==0:
+        return 1
+    else:
+        return base * power(base, exponent-1)
     """
     Calculate base^exponent using recursion.
 
@@ -135,6 +162,10 @@ def power(base, exponent):
 
 
 def reverse_string(text):
+    if not text or len(text)==1: # Base Case where there's nothing else to reverse because there's only one character
+        return text
+    else:
+        return text[-1] + reverse_string(text[:-1]) # Returns the last character and then calls the function on the rest of the word by slicing the string
     """
     Reverse a string using recursion.
 
@@ -160,6 +191,10 @@ def reverse_string(text):
 
 
 def count_down_list(n):
+    if n == 0:
+        return [] # Base Case, when the countdown is done it will "land" here
+    else:
+        return [n] + count_down_list(n-1) # returns the "n" and then keeps subtracting one unit until reaching base case and stops
     """
     Create a list of numbers from n down to 1 using recursion.
 
@@ -180,6 +215,15 @@ def count_down_list(n):
 
 
 def flatten_list(nested_list):
+    if nested_list == []: #Base Case
+        return []
+    result=[] #Creates the empty list to insert flattened results
+    for item in nested_list: 
+        if isinstance(item, list):              # Checks for each element, if it is a list we use .extend to
+            result.extend(flatten_list(item))   # add all that is inside and then recursively it will call the function
+        else:                                   # again until it is a single item and is jsut appended
+            result.append(item)# If it is an item, like said above, the element is just appended
+    return result 
     """
     Flatten a nested list using recursion.
 
