@@ -49,7 +49,7 @@ def load_from_json(filename):
     try:
         with open(filename, "r") as f:
             return json.load(f)
-    except ValueError or TypeError:
+    except ValueError or FileNotFoundError:
         return None
     """
     Load data from a JSON file.
